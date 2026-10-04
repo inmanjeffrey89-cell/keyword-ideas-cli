@@ -1,0 +1,1 @@
+{ "name": "keyword-ideas-cli", "version": "1.0.0", "type": "module", "bin": {"keyword-ideas": "keyword-ideas.mjs"}, "license": "MIT", "description": "Pull real keyword ideas from Google/YouTube/Amazon/Bing autocomplete, no API key.", "keywords": ["seo","keyword-research","autocomplete","google","cli"] }
