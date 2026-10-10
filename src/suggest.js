@@ -16,24 +16,28 @@ export function suggestUrl(source, term, { gl = '', hl = 'en' } = {}) {
   }
 }
 
+// Returns the suggestions, [] when the source answered with none, or null when the body isn't a
+// suggestion response at all (a captcha, consent or error page), so callers can tell them apart.
 export function parseSuggest(source, body) {
   try {
     if (source === 'amazon') {
       const j = JSON.parse(body);
+      if (!j || typeof j !== 'object' || Array.isArray(j)) return null;
       return (j.suggestions || [])
         .filter((s) => (s.type ? s.type === 'KEYWORD' : true) && s.value)
         .map((s) => s.value);
     }
     if (source === 'youtube') {
       const m = body.match(/\((\[[\s\S]*\])\)/);
-      if (!m) return [];
+      if (!m) return null;
       const arr = JSON.parse(m[1]);
       return (arr[1] || []).map((row) => (Array.isArray(row) ? row[0] : row)).filter(Boolean);
     }
     // google (firefox) + bing (osjson): ["query", ["s1","s2",...]]
     const arr = JSON.parse(body);
+    if (!Array.isArray(arr)) return null;
     return (arr[1] || []).filter((s) => typeof s === 'string');
   } catch {
-    return [];
+    return null;
   }
 }

@@ -1,1 +1,33 @@
-{ "name": "keyword-ideas-cli", "version": "1.0.0", "type": "module", "bin": {"keyword-ideas": "keyword-ideas.mjs"}, "license": "MIT", "description": "Pull real keyword ideas from Google/YouTube/Amazon/Bing autocomplete, no API key.", "keywords": ["seo","keyword-research","autocomplete","google","cli"] }
+{
+  "name": "keyword-ideas-cli",
+  "version": "2.0.0",
+  "description": "Pull real keyword ideas from Google/YouTube/Amazon/Bing autocomplete, no API key.",
+  "type": "module",
+  "bin": {
+    "keyword-ideas": "keyword-ideas.mjs"
+  },
+  "files": [
+    "keyword-ideas.mjs",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inmanjeffrey89-cell/keyword-ideas-cli.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "seo",
+    "keyword-research",
+    "autocomplete",
+    "google",
+    "cli"
+  ]
+}

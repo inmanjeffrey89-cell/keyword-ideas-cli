@@ -9,10 +9,17 @@ export class SuggestError extends Error {
 
 export async function fetchSuggest(source, term, { gl = '', hl = 'en', fetchImpl = fetch } = {}) {
   const url = suggestUrl(source, term, { gl, hl });
-  let res;
-  try { res = await fetchImpl(url, { headers: { 'user-agent': UA } }); }
-  catch (e) { throw new SuggestError('NETWORK', `${source} request failed: ${e.message}`, { retryable: true }); }
+  let res, body;
+  try {
+    res = await fetchImpl(url, { headers: { 'user-agent': UA } });
+    body = await res.text();
+  } catch (e) {
+    throw new SuggestError('NETWORK', `${source} request failed: ${e.message}`, { retryable: true });
+  }
   if (res.status === 429 || res.status === 403) throw new SuggestError('BLOCKED', `${source} HTTP ${res.status}`, { retryable: true });
-  if (!res.ok) throw new SuggestError('NETWORK', `${source} HTTP ${res.status}`, { retryable: true });
-  return parseSuggest(source, await res.text());
+  if (res.status === 400 || res.status === 414) throw new SuggestError('INVALID_REQUEST', `${source} rejected the query (HTTP ${res.status}; is the seed too long?)`);
+  if (!res.ok) throw new SuggestError('NETWORK', `${source} HTTP ${res.status}`, { retryable: res.status >= 500 || res.status === 408 });
+  const suggestions = parseSuggest(source, body);
+  if (suggestions === null) throw new SuggestError('BAD_RESPONSE', `${source} answered with something other than suggestions (a captcha or consent page?)`, { retryable: true });
+  return suggestions;
 }
