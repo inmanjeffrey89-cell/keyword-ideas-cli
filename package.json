@@ -1,6 +1,6 @@
 {
   "name": "keyword-ideas-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Pull real keyword ideas from Google/YouTube/Amazon/Bing autocomplete, no API key.",
   "type": "module",
   "bin": {
@@ -23,6 +23,15 @@
     "url": "git+https://github.com/inmanjeffrey89-cell/keyword-ideas-cli.git"
   },
   "license": "MIT",
+  "author": {
+    "name": "Jeffrey Inman",
+    "email": "jeff.helpsupport@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/inmanjeffrey89-cell/keyword-ideas-cli/issues",
+    "email": "jeff.helpsupport@gmail.com"
+  },
+  "homepage": "https://github.com/inmanjeffrey89-cell/keyword-ideas-cli#readme",
   "keywords": [
     "seo",
     "keyword-research",
